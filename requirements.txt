@@ -1,0 +1,4 @@
+chardet
+colorama
+halo
+pathspec
