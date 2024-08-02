@@ -7,6 +7,7 @@ DEFAULT_CONFIG = {
         "style": "plain",
         "remove_comments": False,
         "remove_empty_lines": False,
+        "top_files_length": 5
     },
     "ignore": {
         "use_gitignore": True,

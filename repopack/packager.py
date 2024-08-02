@@ -16,8 +16,9 @@ def pack(root_dir: str, config: Dict[str, Any]) -> Dict[str, Any]:
                 all_file_paths.append(file_path)
 
     sanitized_files = sanitize_files(all_file_paths, root_dir, config)
+    file_char_counts = {file['path']: len(file['content']) for file in sanitized_files}
 
-    generate_output(root_dir, config, sanitized_files, all_file_paths)
+    generate_output(root_dir, config, sanitized_files, all_file_paths, file_char_counts)
 
     total_files = len(sanitized_files)
     total_characters = sum(len(file['content']) for file in sanitized_files)
@@ -25,4 +26,5 @@ def pack(root_dir: str, config: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "total_files": total_files,
         "total_characters": total_characters,
+        "file_char_counts": file_char_counts,
     }

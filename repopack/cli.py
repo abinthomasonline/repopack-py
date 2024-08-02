@@ -16,6 +16,7 @@ def run_cli():
     parser.add_argument("-c", "--config", help="Path to a custom config file")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
     parser.add_argument("-v", "--version", action="version", version=f"Repopack v{__version__}")
+    parser.add_argument("--top-files-len", type=int, help="Specify the number of top files to display")
     args = parser.parse_args()
 
     logger.set_verbose(args.verbose)
@@ -26,6 +27,9 @@ def run_cli():
         cli_config["output"] = {"file_path": args.output}
     if args.ignore:
         cli_config["ignore"] = {"custom_patterns": args.ignore.split(",")}
+    if args.top_files_len is not None:
+        cli_config["output"] = cli_config.get("output", {})
+        cli_config["output"]["top_files_length"] = args.top_files_len
     
     merged_config = merge_configs(config, cli_config)
 
@@ -35,7 +39,8 @@ def run_cli():
         pack_result = pack(os.path.abspath(args.directory), merged_config)
         spinner.succeed("Packing completed successfully!")
 
-        print_summary(pack_result['total_files'], pack_result['total_characters'], merged_config['output']['file_path'])
+        print_summary(pack_result['total_files'], pack_result['total_characters'], merged_config['output']['file_path'], 
+                      pack_result['file_char_counts'], merged_config['output']['top_files_length'])
         print_completion()
     except Exception as e:
         spinner.fail(f"Error during packing: {str(e)}")

@@ -3,7 +3,8 @@ from datetime import datetime
 from typing import Dict, Any, List
 from .utils.tree_generator import generate_tree_string
 
-def generate_output(root_dir: str, config: Dict[str, Any], sanitized_files: List[Dict[str, str]], all_file_paths: List[str]):
+def generate_output(root_dir: str, config: Dict[str, Any], sanitized_files: List[Dict[str, str]], all_file_paths: List[str], 
+                    file_char_counts: Dict[str, int]):
     output_path = os.path.join(root_dir, config['output']['file_path'])
     tree_string = generate_tree_string(all_file_paths)
 
@@ -27,3 +28,15 @@ def generate_output(root_dir: str, config: Dict[str, Any], sanitized_files: List
             f.write(f"File: {file['path']}\n")
             f.write("=" * 16 + "\n")
             f.write(file['content'] + "\n\n")
+
+        top_files_length = config['output']['top_files_length']
+        if top_files_length > 0:
+            f.write("\n" + "=" * 64 + "\n")
+            f.write(f"Top {top_files_length} Files by Character Count\n")
+            f.write("=" * 64 + "\n")
+            
+            sorted_files = sorted(file_char_counts.items(), key=lambda x: x[1], reverse=True)
+            for i, (file_path, char_count) in enumerate(sorted_files[:top_files_length], 1):
+                f.write(f"{i}. {file_path} ({char_count} chars)\n")
+            
+            f.write("\n")
