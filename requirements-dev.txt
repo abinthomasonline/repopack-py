@@ -3,3 +3,6 @@ chardet
 colorama
 halo
 pathspec
+pre-commit
+pytest
+pytest-cov

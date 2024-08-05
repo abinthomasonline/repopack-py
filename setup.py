@@ -29,7 +29,7 @@ setup(
         # Add any other dependencies your project needs
     ],
     extras_require={
-        "dev": ["black", "pre-commit"],
+        "dev": ["black", "pre-commit", "pytest", "pytest-cov"],
     },
     classifiers=[
         "Programming Language :: Python :: 3",
