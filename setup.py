@@ -29,7 +29,7 @@ setup(
         # Add any other dependencies your project needs
     ],
     extras_require={
-        "dev": ["black"],
+        "dev": ["black", "pre-commit"],
     },
     classifiers=[
         "Programming Language :: Python :: 3",
