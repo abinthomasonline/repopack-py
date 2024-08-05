@@ -1,8 +1,9 @@
 from halo import Halo
 
+
 class Spinner:
     def __init__(self, message):
-        self.spinner = Halo(text=message, spinner='dots')
+        self.spinner = Halo(text=message, spinner="dots")
 
     def start(self):
         self.spinner.start()
@@ -15,4 +16,3 @@ class Spinner:
 
     def fail(self, message):
         self.spinner.fail(message)
-        
