@@ -1,10 +1,11 @@
 import os
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Callable
 from pathspec import PathSpec
 from pathspec.patterns import GitWildMatchPattern
 from .logger import logger
 
-DEFAULT_IGNORE_LIST = [
+# Default list of patterns to ignore in repository packing
+DEFAULT_IGNORE_LIST: List[str] = [
     # Version control
     ".git",
     ".gitignore",
@@ -98,9 +99,18 @@ DEFAULT_IGNORE_LIST = [
 
 
 def get_ignore_patterns(filename: str, root_dir: str) -> List[str]:
-    """Get ignore patterns from a file."""
-    ignore_path = os.path.join(root_dir, filename)
-    patterns = []
+    """
+    Get ignore patterns from a file.
+
+    Args:
+        filename (str): The name of the ignore file (e.g., '.gitignore').
+        root_dir (str): The root directory of the project.
+
+    Returns:
+        List[str]: A list of ignore patterns read from the file.
+    """
+    ignore_path: str = os.path.join(root_dir, filename)
+    patterns: List[str] = []
     if os.path.exists(ignore_path):
         try:
             with open(ignore_path, "r") as f:
@@ -115,8 +125,17 @@ def get_ignore_patterns(filename: str, root_dir: str) -> List[str]:
 
 
 def get_all_ignore_patterns(root_dir: str, config: Dict[str, Any]) -> List[str]:
-    """Get all ignore patterns based on the configuration."""
-    patterns = []
+    """
+    Get all ignore patterns based on the configuration.
+
+    Args:
+        root_dir (str): The root directory of the project.
+        config (Dict[str, Any]): The configuration dictionary.
+
+    Returns:
+        List[str]: A list of all ignore patterns to be used.
+    """
+    patterns: List[str] = []
     if config["ignore"]["use_default_patterns"]:
         patterns.extend(DEFAULT_IGNORE_LIST)
     if config["ignore"]["use_gitignore"]:
@@ -126,7 +145,16 @@ def get_all_ignore_patterns(root_dir: str, config: Dict[str, Any]) -> List[str]:
     return patterns
 
 
-def create_ignore_filter(patterns: List[str]):
-    """Create an ignore filter function based on the given patterns."""
-    spec = PathSpec.from_lines(GitWildMatchPattern, patterns)
+def create_ignore_filter(patterns: List[str]) -> Callable[[str], bool]:
+    """
+    Create an ignore filter function based on the given patterns.
+
+    Args:
+        patterns (List[str]): A list of ignore patterns.
+
+    Returns:
+        Callable[[str], bool]: A function that takes a file path and returns True if the file should be included,
+                               False if it should be ignored.
+    """
+    spec: PathSpec = PathSpec.from_lines(GitWildMatchPattern, patterns)
     return lambda path: not spec.match_file(path)

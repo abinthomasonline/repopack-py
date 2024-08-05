@@ -1,9 +1,10 @@
 import json
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from .exceptions import ConfigurationError
 
 
-DEFAULT_CONFIG = {
+# Default configuration for Repopack
+DEFAULT_CONFIG: Dict[str, Dict[str, Any]] = {
     "output": {
         "file_path": "repopack-output.txt",
         "style": "plain",
@@ -20,7 +21,19 @@ DEFAULT_CONFIG = {
 }
 
 
-def load_config(config_path: str = None) -> Dict[str, Any]:
+def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
+    """
+    Load configuration from a JSON file.
+
+    Args:
+        config_path (Optional[str]): Path to the configuration file.
+
+    Returns:
+        Dict[str, Any]: Loaded configuration or an empty dictionary if no file is provided.
+
+    Raises:
+        ConfigurationError: If there's an error reading or parsing the configuration file.
+    """
     if config_path:
         try:
             with open(config_path, "r") as f:
@@ -33,6 +46,19 @@ def load_config(config_path: str = None) -> Dict[str, Any]:
 
 
 def merge_configs(file_config: Dict[str, Any], cli_config: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Merge configurations from different sources.
+
+    Args:
+        file_config (Dict[str, Any]): Configuration loaded from a file.
+        cli_config (Dict[str, Any]): Configuration provided via command-line interface.
+
+    Returns:
+        Dict[str, Any]: Merged configuration.
+
+    Raises:
+        ConfigurationError: If there's an error during the merging process.
+    """
     try:
         merged = DEFAULT_CONFIG.copy()
         merged = deep_merge(merged, file_config)
@@ -42,7 +68,17 @@ def merge_configs(file_config: Dict[str, Any], cli_config: Dict[str, Any]) -> Di
         raise ConfigurationError(f"Error merging configurations: {str(e)}")
 
 
-def deep_merge(dict1, dict2):
+def deep_merge(dict1: Dict[str, Any], dict2: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Recursively merge two dictionaries.
+
+    Args:
+        dict1 (Dict[str, Any]): First dictionary to merge.
+        dict2 (Dict[str, Any]): Second dictionary to merge.
+
+    Returns:
+        Dict[str, Any]: Merged dictionary.
+    """
     for key, value in dict2.items():
         if key in dict1:
             if isinstance(dict1[key], dict) and isinstance(value, dict):

@@ -2,6 +2,7 @@ import argparse
 import logging
 import os
 import sys
+from typing import Dict, Any
 from .packager import pack
 from .config import load_config, merge_configs
 from .exceptions import RepopackError, ConfigurationError
@@ -11,7 +12,12 @@ from .utils.spinner import Spinner
 from .version import __version__
 
 
-def run_cli():
+def run_cli() -> None:
+    """
+    Main entry point for the Repopack CLI.
+    Parses command-line arguments, loads and merges configurations, and executes the packing process.
+    """
+    # Set up argument parser
     parser = argparse.ArgumentParser(
         description="Repopack - Pack your repository into a single AI-friendly file"
     )
@@ -37,10 +43,12 @@ def run_cli():
     )
     args = parser.parse_args()
 
+    # Set verbosity level
     logger.set_verbose(args.verbose)
 
+    # Load configuration
     try:
-        config = load_config(args.config)
+        config: Dict[str, Any] = load_config(args.config)
     except ConfigurationError as e:
         logger.error(f"Configuration file error: {str(e)}")
         logger.debug("Stack trace:", exc_info=True)
@@ -50,7 +58,8 @@ def run_cli():
         logger.debug("Stack trace:", exc_info=True)
         sys.exit(1)
 
-    cli_config = {}
+    # Create CLI configuration
+    cli_config: Dict[str, Any] = {}
     if args.output:
         cli_config["output"] = {"file_path": args.output}
     if args.ignore:
@@ -65,8 +74,9 @@ def run_cli():
         cli_config["output"] = cli_config.get("output", {})
         cli_config["output"]["style"] = args.output_style
 
+    # Merge configurations
     try:
-        merged_config = merge_configs(config, cli_config)
+        merged_config: Dict[str, Any] = merge_configs(config, cli_config)
     except ConfigurationError as e:
         logger.error(f"Error merging configurations: {str(e)}")
         logger.debug("Stack trace:", exc_info=True)
@@ -74,12 +84,15 @@ def run_cli():
 
     logger.debug(f"Merged configuration: {merged_config}")
 
+    # Initialize spinner for visual feedback
     spinner = Spinner("Packing files...")
     try:
         spinner.start()
-        pack_result = pack(os.path.abspath(args.directory), merged_config)
+        # Execute packing process
+        pack_result: Dict[str, Any] = pack(os.path.abspath(args.directory), merged_config)
         spinner.succeed("Packing completed successfully!")
 
+        # Print summary and completion message
         print_summary(
             pack_result["total_files"],
             pack_result["total_characters"],
