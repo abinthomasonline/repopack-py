@@ -98,29 +98,41 @@ DEFAULT_IGNORE_LIST: List[str] = [
 ]
 
 
-def get_ignore_patterns(filename: str, root_dir: str) -> List[str]:
+def get_ignore_patterns(filename: str, start_dir: str) -> List[str]:
     """
-    Get ignore patterns from a file.
+    Get ignore patterns from a file, searching in the start directory and its parents.
 
     Args:
         filename (str): The name of the ignore file (e.g., '.gitignore').
-        root_dir (str): The root directory of the project.
+        start_dir (str): The directory to start searching from.
 
     Returns:
         List[str]: A list of ignore patterns read from the file.
     """
-    ignore_path: str = os.path.join(root_dir, filename)
     patterns: List[str] = []
-    if os.path.exists(ignore_path):
-        try:
-            with open(ignore_path, "r") as f:
-                patterns = [line.strip() for line in f if line.strip() and not line.startswith("#")]
-        except IOError as e:
-            logger.warning(f"Error reading ignore file {ignore_path}: {str(e)}")
-        except Exception as e:
-            logger.error(f"Unexpected error reading ignore file {ignore_path}: {str(e)}")
-    else:
-        logger.debug(f"Ignore file not found: {ignore_path}")
+    current_dir = start_dir
+    while True:
+        ignore_path: str = os.path.join(current_dir, filename)
+        if os.path.exists(ignore_path):
+            try:
+                with open(ignore_path, "r") as f:
+                    new_patterns = [
+                        line.strip() for line in f if line.strip() and not line.startswith("#")
+                    ]
+                    patterns = new_patterns + patterns  # Prepend new patterns
+                logger.debug(f"Found and processed ignore file: {ignore_path}")
+            except IOError as e:
+                logger.warning(f"Error reading ignore file {ignore_path}: {str(e)}")
+            except Exception as e:
+                logger.error(f"Unexpected error reading ignore file {ignore_path}: {str(e)}")
+
+        parent_dir = os.path.dirname(current_dir)
+        if parent_dir == current_dir:  # We've reached the root directory
+            break
+        current_dir = parent_dir
+
+    if not patterns:
+        logger.debug(f"No {filename} found in {start_dir} or its parent directories")
     return patterns
 
 
