@@ -3,6 +3,7 @@ import os
 
 # Read the contents of your README file
 from pathlib import Path
+
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
@@ -13,7 +14,7 @@ with open(os.path.join("repopack", "version.py")) as fp:
 
 setup(
     name="repopack",
-    version=version['__version__'],
+    version=version["__version__"],
     author="Abin Thomas",
     author_email="abinthomasonline@gmail.com",
     description="A tool to pack repository contents into a single file for AI analysis",
@@ -27,6 +28,9 @@ setup(
         "colorama",
         # Add any other dependencies your project needs
     ],
+    extras_require={
+        "dev": ["black"],
+    },
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

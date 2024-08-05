@@ -3,13 +3,14 @@ from colorama import Fore, Style, init
 
 init(autoreset=True)
 
+
 class ColoredFormatter(logging.Formatter):
     COLORS = {
-        'DEBUG': Fore.BLUE,
-        'INFO': Fore.CYAN,
-        'WARNING': Fore.YELLOW,
-        'ERROR': Fore.RED,
-        'CRITICAL': Fore.RED + Style.BRIGHT,
+        "DEBUG": Fore.BLUE,
+        "INFO": Fore.CYAN,
+        "WARNING": Fore.YELLOW,
+        "ERROR": Fore.RED,
+        "CRITICAL": Fore.RED + Style.BRIGHT,
     }
 
     def format(self, record):
@@ -18,13 +19,14 @@ class ColoredFormatter(logging.Formatter):
             record.levelname = f"{self.COLORS[levelname]}{levelname}{Style.RESET_ALL}"
         return super().format(record)
 
+
 class Logger:
     def __init__(self):
-        self.logger = logging.getLogger('repopack')
+        self.logger = logging.getLogger("repopack")
         self.logger.setLevel(logging.INFO)
 
         console_handler = logging.StreamHandler()
-        console_handler.setFormatter(ColoredFormatter('%(levelname)s: %(message)s'))
+        console_handler.setFormatter(ColoredFormatter("%(levelname)s: %(message)s"))
         self.logger.addHandler(console_handler)
 
     def set_verbose(self, verbose: bool):
@@ -44,5 +46,10 @@ class Logger:
 
     def critical(self, message):
         self.logger.critical(message)
+
+    def trace(self, message):
+        if self.logger.level <= logging.DEBUG:
+            self.logger.debug(f"{Fore.MAGENTA}TRACE: {message}{Style.RESET_ALL}")
+
 
 logger = Logger()
