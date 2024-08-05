@@ -1,6 +1,6 @@
 from .cli import run_cli
 
-# This is the main entry point for the repopack command-line application.
+# This is the main entry point for the repopack-py command-line application.
 # It checks if the script is being run directly (not imported as a module)
 # and if so, it calls the run_cli function to start the CLI.
 

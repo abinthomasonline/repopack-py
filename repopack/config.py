@@ -3,10 +3,10 @@ from typing import Dict, Any, Optional
 from .exceptions import ConfigurationError
 
 
-# Default configuration for Repopack
+# Default configuration for RepopackPy
 DEFAULT_CONFIG: Dict[str, Dict[str, Any]] = {
     "output": {
-        "file_path": "repopack-output.txt",
+        "file_path": "repopackpy-output.txt",
         "style": "plain",
         "remove_comments": False,
         "remove_empty_lines": False,

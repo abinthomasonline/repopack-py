@@ -93,8 +93,9 @@ DEFAULT_IGNORE_LIST: List[str] = [
     # Temporary files
     "tmp",
     "temp",
-    # repopack output
-    "repopack-output.txt",
+    # repopack-py output
+    "repopackpy-output.txt",
+    "repopackpy-output.xml",
 ]
 
 
@@ -152,7 +153,7 @@ def get_all_ignore_patterns(root_dir: str, config: Dict[str, Any]) -> List[str]:
         patterns.extend(DEFAULT_IGNORE_LIST)
     if config["ignore"]["use_gitignore"]:
         patterns.extend(get_ignore_patterns(".gitignore", root_dir))
-    patterns.extend(get_ignore_patterns(".repopackignore", root_dir))
+    patterns.extend(get_ignore_patterns(".repopackpyignore", root_dir))
     patterns.extend(config["ignore"]["custom_patterns"])
     return patterns
 

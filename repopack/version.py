@@ -2,8 +2,8 @@
 
 from typing import Final
 
-# The current version of the Repopack package
-__version__: Final[str] = "0.1.0"
+# The current version of the RepopackPy package
+__version__: Final[str] = "0.1.1"
 
 # Note: This version follows Semantic Versioning (SemVer) principles.
 # Format: MAJOR.MINOR.PATCH

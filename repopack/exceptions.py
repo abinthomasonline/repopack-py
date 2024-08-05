@@ -4,7 +4,7 @@ from typing import Optional
 
 
 class RepopackError(Exception):
-    """Base exception class for Repopack errors."""
+    """Base exception class for RepopackPy errors."""
 
     def __init__(self, message: Optional[str] = None) -> None:
         """

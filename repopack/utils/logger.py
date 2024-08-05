@@ -34,11 +34,11 @@ class ColoredFormatter(logging.Formatter):
 
 
 class Logger:
-    """Custom logger class for RepoPackage."""
+    """Custom logger class for RepopackPy."""
 
     def __init__(self) -> None:
         """Initialize the logger with a console handler and colored formatter."""
-        self.logger: logging.Logger = logging.getLogger("repopack")
+        self.logger: logging.Logger = logging.getLogger("repopack-py")
         self.logger.setLevel(logging.INFO)
 
         console_handler: logging.StreamHandler = logging.StreamHandler()

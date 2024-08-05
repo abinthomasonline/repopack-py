@@ -14,19 +14,19 @@ from .version import __version__
 
 def run_cli() -> None:
     """
-    Main entry point for the Repopack CLI.
+    Main entry point for the RepopackPy CLI.
     Parses command-line arguments, loads and merges configurations, and executes the packing process.
     """
     # Set up argument parser
     parser = argparse.ArgumentParser(
-        description="Repopack - Pack your repository into a single AI-friendly file"
+        description="RepopackPy - Pack your repository into a single AI-friendly file"
     )
     parser.add_argument("directory", nargs="?", default=".", help="Directory to pack")
     parser.add_argument("-o", "--output", help="Specify the output file name")
     parser.add_argument("-i", "--ignore", help="Additional ignore patterns (comma-separated)")
     parser.add_argument("-c", "--config", help="Path to a custom config file")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
-    parser.add_argument("-v", "--version", action="version", version=f"Repopack v{__version__}")
+    parser.add_argument("-v", "--version", action="version", version=f"RepopackPy v{__version__}")
     parser.add_argument(
         "--top-files-len", type=int, help="Specify the number of top files to display"
     )

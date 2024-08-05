@@ -24,9 +24,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         "chardet",
-        "pathspec",
         "colorama",
-        # Add any other dependencies your project needs
+        "halo",
+        "pathspec",
     ],
     extras_require={
         "dev": ["black", "pre-commit", "pytest", "pytest-cov"],
