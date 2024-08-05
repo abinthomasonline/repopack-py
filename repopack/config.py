@@ -12,6 +12,7 @@ DEFAULT_CONFIG: Dict[str, Dict[str, Any]] = {
         "remove_empty_lines": False,
         "top_files_length": 5,
         "show_line_numbers": False,
+        "header_text": "",
     },
     "ignore": {
         "use_gitignore": True,
