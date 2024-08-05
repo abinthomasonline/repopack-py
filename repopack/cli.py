@@ -84,12 +84,20 @@ def run_cli() -> None:
 
     logger.debug(f"Merged configuration: {merged_config}")
 
+    # Determine the final output path
+    if os.path.isabs(merged_config["output"]["file_path"]):
+        final_output_path = merged_config["output"]["file_path"]
+    else:
+        final_output_path = os.path.join(os.getcwd(), merged_config["output"]["file_path"])
+
     # Initialize spinner for visual feedback
     spinner = Spinner("Packing files...")
     try:
         spinner.start()
         # Execute packing process
-        pack_result: Dict[str, Any] = pack(os.path.abspath(args.directory), merged_config)
+        pack_result: Dict[str, Any] = pack(
+            os.path.abspath(args.directory), merged_config, final_output_path
+        )
         spinner.succeed("Packing completed successfully!")
 
         # Print summary and completion message

@@ -15,7 +15,7 @@ def generate_output(
     config: Dict[str, Any],
     sanitized_files: List[Dict[str, str]],
     all_file_paths: List[str],
-    file_char_counts: Dict[str, int],
+    output_path: str,
 ) -> None:
     """
     Generate the output file based on the specified configuration.
@@ -25,12 +25,11 @@ def generate_output(
         config (Dict[str, Any]): The configuration dictionary.
         sanitized_files (List[Dict[str, str]]): List of sanitized file contents.
         all_file_paths (List[str]): List of all file paths in the repository.
-        file_char_counts (Dict[str, int]): Dictionary of file paths and their character counts.
+        output_path (str): The path to the output file.
 
     Raises:
         OutputGenerationError: If there's an error during output generation.
     """
-    output_path: str = os.path.join(root_dir, config["output"]["file_path"])
     common_data = generate_common_data(config, all_file_paths, sanitized_files)
 
     try:

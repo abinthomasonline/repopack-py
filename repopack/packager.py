@@ -7,13 +7,14 @@ from .utils.logger import logger
 from .output_generator import generate_output
 
 
-def pack(root_dir: str, config: Dict[str, Any]) -> Dict[str, Any]:
+def pack(root_dir: str, config: Dict[str, Any], output_path: str) -> Dict[str, Any]:
     """
     Pack the contents of a directory according to the given configuration.
 
     Args:
         root_dir (str): The root directory to pack.
         config (Dict[str, Any]): The configuration dictionary.
+        output_path (str): The path to the output file.
 
     Returns:
         Dict[str, Any]: A dictionary containing statistics about the packed files.
@@ -54,7 +55,7 @@ def pack(root_dir: str, config: Dict[str, Any]) -> Dict[str, Any]:
 
         # Generate output
         logger.debug("Generating output")
-        generate_output(root_dir, config, sanitized_files, all_file_paths, file_char_counts)
+        generate_output(root_dir, config, sanitized_files, all_file_paths, output_path)
 
         # Calculate statistics
         total_files: int = len(sanitized_files)
