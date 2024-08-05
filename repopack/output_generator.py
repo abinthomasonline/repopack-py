@@ -148,9 +148,9 @@ def generate_xml_output(
     if config["output"]["remove_comments"]:
         ET.SubElement(notes, "note").text = "Code comments have been removed."
     if config["output"]["show_line_numbers"]:
-        ET.SubElement(
-            notes, "note"
-        ).text = "Line numbers have been added to the beginning of each line."
+        ET.SubElement(notes, "note").text = (
+            "Line numbers have been added to the beginning of each line."
+        )
 
     # Add repository structure
     ET.SubElement(root, "repository_structure").text = tree_string
