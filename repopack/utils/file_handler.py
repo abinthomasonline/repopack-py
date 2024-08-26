@@ -54,7 +54,7 @@ def sanitize_files(
                 else:
                     logger.trace(f"File skipped (empty content): {file_path}")
         except Exception as e:
-            raise FileProcessingError(f"Error processing file {file_path}: {str(e)}")
+            raise FileProcessingError(file_path=file_path, error_message=str(e))
     return sanitized_files
 
 
@@ -102,7 +102,7 @@ def sanitize_file(file_path: str, config: Dict[str, Any]) -> Optional[str]:
 
         return content
     except Exception as e:
-        raise FileProcessingError(f"Error sanitizing file {file_path}: {str(e)}")
+        raise FileProcessingError(file_path=file_path, error_message=str(e))
 
 
 def remove_empty_lines(content: str) -> str:
