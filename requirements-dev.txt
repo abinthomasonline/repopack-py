@@ -6,3 +6,4 @@ pathspec
 pre-commit
 pytest
 pytest-cov
+twine
