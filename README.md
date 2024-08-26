@@ -12,7 +12,7 @@ To use Repopack-py, follow these steps:
 
 1. Install the package:
    ```
-   pip install repopack-py
+   pip install repopack
    ```
 
 2. Run the following command:
