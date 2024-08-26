@@ -3,7 +3,7 @@
 from typing import Final
 
 # The current version of the RepopackPy package
-__version__: Final[str] = "0.1.1"
+__version__: Final[str] = "0.1.2"
 
 # Note: This version follows Semantic Versioning (SemVer) principles.
 # Format: MAJOR.MINOR.PATCH
