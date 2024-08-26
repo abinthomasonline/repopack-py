@@ -29,7 +29,7 @@ setup(
         "pathspec",
     ],
     extras_require={
-        "dev": ["black", "pre-commit", "pytest", "pytest-cov"],
+        "dev": ["black", "pre-commit", "pytest", "pytest-cov", "twine"],
     },
     classifiers=[
         "Programming Language :: Python :: 3",
