@@ -78,8 +78,13 @@ def sanitize_file(file_path: str, config: Dict[str, Any]) -> Optional[str]:
 
         # Detect file encoding
         encoding = chardet.detect(raw_content)["encoding"] or "utf-8"
-        content = raw_content.decode(encoding)
-        logger.trace(f"File encoding detected: {encoding}")
+        try:
+            content = raw_content.decode(encoding)
+            logger.trace(f"File encoding detected: {encoding}")
+        except UnicodeDecodeError:
+            logger.warning(f"Failed to decode with detected encoding {encoding}, trying UTF-8")
+            content = raw_content.decode("utf-8")
+            logger.trace("File decoded with UTF-8")
 
         # Remove comments (not implemented yet)
         if config["output"]["remove_comments"]:
