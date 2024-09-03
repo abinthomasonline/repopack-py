@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from colorama import Fore, Style, init
 
 # Initialize colorama for cross-platform colored output
@@ -54,25 +54,25 @@ class Logger:
         """
         self.logger.setLevel(logging.DEBUG if verbose else logging.INFO)
 
-    def debug(self, message: str) -> None:
+    def debug(self, message: str, **kwargs: Any) -> None:
         """Log a debug message."""
-        self.logger.debug(message)
+        self.logger.debug(message, **kwargs)
 
-    def info(self, message: str) -> None:
+    def info(self, message: str, **kwargs: Any) -> None:
         """Log an info message."""
-        self.logger.info(message)
+        self.logger.info(message, **kwargs)
 
-    def warning(self, message: str) -> None:
+    def warning(self, message: str, **kwargs: Any) -> None:
         """Log a warning message."""
-        self.logger.warning(message)
+        self.logger.warning(message, **kwargs)
 
-    def error(self, message: str) -> None:
+    def error(self, message: str, **kwargs: Any) -> None:
         """Log an error message."""
-        self.logger.error(message)
+        self.logger.error(message, **kwargs)
 
-    def critical(self, message: str) -> None:
+    def critical(self, message: str, **kwargs: Any) -> None:
         """Log a critical message."""
-        self.logger.critical(message)
+        self.logger.critical(message, **kwargs)
 
     def trace(self, message: str) -> None:
         """
