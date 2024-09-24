@@ -6,6 +6,9 @@ Repopack is a powerful tool that packs your entire repository into a single, AI-
 Perfect for when you need to feed your codebase to Large Language Models (LLMs) or other AI tools like Claude, ChatGPT, and Gemini.
 
 
+Here is webapp for same use case, runs entirely on browser, fully static :- repo2txt.simplebasedomain.com  [Code](https://github.com/abinthomasonline/repo2txt)
+
+
 ## 📊 Usage
 
 To use Repopack-py, follow these steps:
