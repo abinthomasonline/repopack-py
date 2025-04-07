@@ -155,6 +155,7 @@ def get_all_ignore_patterns(root_dir: str, config: Dict[str, Any]) -> List[str]:
         patterns.extend(get_ignore_patterns(".gitignore", root_dir))
     patterns.extend(get_ignore_patterns(".repopackpyignore", root_dir))
     patterns.extend(config["ignore"]["custom_patterns"])
+    patterns.extend([config["output"]["file_path"]])
     return patterns
 
 
