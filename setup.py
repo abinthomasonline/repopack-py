@@ -21,7 +21,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/abinthomasonline/repopack-py",
-    packages=find_packages(),
+    packages=find_packages(include=["repopack"]),
     install_requires=[
         "chardet",
         "colorama",
